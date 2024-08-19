@@ -5,7 +5,7 @@ interface RegisterModalState {
 }
 
 const initialState: RegisterModalState = {
-  isOpen: true,
+  isOpen: false,
 };
 
 const registerModalSlice = createSlice({
@@ -15,8 +15,11 @@ const registerModalSlice = createSlice({
     onClose: (state) => {
       state.isOpen = false;
     },
+    onOpen: (state) => {
+      state.isOpen = true;
+    }
   },
 });
 
-export const { onClose } = registerModalSlice.actions;
+export const { onClose,onOpen } = registerModalSlice.actions;
 export default registerModalSlice.reducer;

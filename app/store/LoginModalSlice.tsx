@@ -5,7 +5,7 @@ interface LoginModalState {
 }
 
 const initialState: LoginModalState = {
-  isOpen: true,
+  isOpen: false,
 };
 
 const loginModalSlice = createSlice({
@@ -15,8 +15,12 @@ const loginModalSlice = createSlice({
     onClose: (state) => {
       state.isOpen = false;
     },
+
+    onOpen: (state) => {
+      state.isOpen = true;
+    }
   },
 });
 
-export const { onClose } = loginModalSlice.actions;
+export const { onClose, onOpen} = loginModalSlice.actions;
 export default loginModalSlice.reducer;

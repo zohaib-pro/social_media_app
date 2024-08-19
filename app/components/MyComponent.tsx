@@ -11,7 +11,7 @@ const MyComponent = () => {
 
   if (status === "authenticated") {
     // User is logged in
-    return <div className="text-white">Welcome, {session.user.name}!</div>;
+    return <div className="text-white">Welcome, {session?.user?.name}!</div>;
   }
 
   // User is not logged in

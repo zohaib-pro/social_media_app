@@ -1,11 +1,13 @@
 "use client";
-import { onClose } from "@/app/store/RegisterModalSlice";
+import { onClose as onCloseRegister } from "@/app/store/RegisterModalSlice";
+import { onClose, onOpen as onOpenLogin } from "@/app/store/LoginModalSlice";
 import { RootState } from "@/app/store/store";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../Input";
 import Modal from "../Modal";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const RegisterModal = () => {
   const [email, setEmail] = useState("");
@@ -29,16 +31,20 @@ const RegisterModal = () => {
         name,
       });
 
-      // Log the response data
-      console.log(response.data);
+      if (response.status == 201){
+        toast.success("User Registration Successful!");
+      }else{
+        toast.error("Registration failed with error code: "+response.status);
+      }
 
-      dispatch(onClose());
-    } catch (e) {
+      dispatch(onCloseRegister());
+    } catch (e:any) {
       console.log(e);
+      toast.success('test');
     } finally {
       setLoading(false);
     }
-  }, [dispatch]);
+  }, [dispatch, email, password, confirmpassword]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -65,7 +71,7 @@ const RegisterModal = () => {
 
       <Input
         placeholder="Confirm Password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => setConfirmpassword(e.target.value)}
         value={password}
         type="password"
         disabled={isLoading}
@@ -77,7 +83,10 @@ const RegisterModal = () => {
     <div className="text-neutral-400 text-center my-4">
       <p>
         Already have an account?&nbsp;
-        <span className="text-white cursor-pointer hover:underline">
+        <span className="text-white cursor-pointer hover:underline" onClick={()=>{
+          dispatch(onOpenLogin());
+          dispatch(onCloseRegister());
+        }}>
           Sign In
         </span>
       </p>
@@ -90,7 +99,7 @@ const RegisterModal = () => {
       isOpen={loginModalState.isOpen}
       title="Register"
       actionLabel="Sign Up"
-      onClose={() => dispatch(onClose())}
+      onClose={() => dispatch(onCloseRegister())}
       onSubmit={onSubmit}
       body={bodyContent}
       footer={footerContent}

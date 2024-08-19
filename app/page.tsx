@@ -8,11 +8,13 @@ import ClientProviderWrapper from "./components/ClientProviderWrapper";
 import RegisterModal from "./components/modals/RegisterModal";
 import Navbar from "./components/Navbar";
 import MyComponent from "./components/MyComponent";
+import { Toaster } from "react-hot-toast";
 
 export default function Home() {
   return (
     <main>
       <ClientProviderWrapper>
+        <Toaster />
         <LoginModal />
         <RegisterModal />
 
