@@ -23,7 +23,16 @@ model User {
   profileImage  String?  // Optional field for the profile image
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @updatedAt @db.Timestamptz(6)
+
+  posts         Post[]   // One-to-many relationship with Post
 }
 
-
-
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String
+  image     String?  // Optional field for an image associated with the post
+  authorId  Int      // Foreign key to User
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
