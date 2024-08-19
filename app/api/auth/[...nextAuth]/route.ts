@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../libs/prismadb";
 
-export default NextAuth({
+const authOptions =  {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -15,7 +15,8 @@ export default NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid credentials");
+          //throw new Error("Invalid credentials");
+          return;
         }
 
         // Find the user by email
@@ -32,7 +33,7 @@ export default NextAuth({
         }
 
         // If authentication fails
-        throw new Error("Invalid credentials");
+        //throw new Error("Invalid credentials");
       },
     }),
   ],
@@ -76,4 +77,7 @@ export default NextAuth({
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET, // Ensure this is set in your environment
   },
-});
+}
+
+const handler = NextAuth(authOptions)
+export { handler as GET, handler as POST}
