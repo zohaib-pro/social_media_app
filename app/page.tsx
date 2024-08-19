@@ -9,6 +9,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import Navbar from "./components/Navbar";
 import MyComponent from "./components/MyComponent";
 import { Toaster } from "react-hot-toast";
+import Avatar from "./components/Avatar";
 
 export default function Home() {
   return (
@@ -21,7 +22,8 @@ export default function Home() {
         <Layout>
           {/* <Navbar /> */}
           <MyComponent />
-          <h1 className="text-sky-400 ">Home3</h1>
+          <h1 className="text-sky-400 ">Home</h1>
+          <Avatar userId={''} isLarge hasBorder/>
         </Layout>
       </ClientProviderWrapper>
     </main>

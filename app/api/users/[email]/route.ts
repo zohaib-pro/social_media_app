@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../libs/prismadb";
-//import { getUserByEmail } from "../../../libs/prismaClient";
+import { getQuery } from "@/app/utils/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const email = new URL(request.url).pathname.split("/")[3]; // Extract email from URL
+    const email = getQuery(request.url);
     if (!email) {
       return NextResponse.json(
         { error: "Email not provided" },
