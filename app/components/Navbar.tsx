@@ -1,10 +1,15 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session }: any = useSession();
+
+  useEffect(()=>{
+    console.log("session",session);
+  }, [session])
+
   return (
     <div className="text-white">
       <ul className="flex justify-between m-10 item-center">

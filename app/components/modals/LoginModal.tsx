@@ -19,25 +19,26 @@ const LoginModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setLoading(true);
+      console.log("sending email: ", email);
       const res = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
-      alert(res);
+      console.log('login', res);
       dispatch(onClose());
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
-  }, [dispatch]);
+  }, [dispatch, email, password]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
         placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) =>{setEmail(e.target.value); console.log("value", e.target.value)}}
         value={email}
         disabled={isLoading}
       />
@@ -46,6 +47,7 @@ const LoginModal = () => {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        type="password"
         disabled={isLoading}
       />
     </div>

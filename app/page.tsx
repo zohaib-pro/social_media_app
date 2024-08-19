@@ -17,7 +17,7 @@ export default function Home() {
         <RegisterModal />
 
         <Layout>
-          <Navbar />
+          {/* <Navbar /> */}
           <MyComponent />
           <h1 className="text-sky-400 ">Home3</h1>
         </Layout>

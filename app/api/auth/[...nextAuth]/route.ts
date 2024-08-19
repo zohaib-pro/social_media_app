@@ -15,6 +15,8 @@ const authOptions =  {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
+          console.log("email received", credentials?.email);
+          console.error("error", "invalid credentials");
           //throw new Error("Invalid credentials");
           return;
         }
@@ -24,6 +26,7 @@ const authOptions =  {
           where: { email: credentials.email },
         });
 
+        console.log("user", user?.email);
         // Check if the user exists and validate password
         if (
           user &&
@@ -33,6 +36,7 @@ const authOptions =  {
         }
 
         // If authentication fails
+        console.error("error", "invalid credentials 2");
         //throw new Error("Invalid credentials");
       },
     }),

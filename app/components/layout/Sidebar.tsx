@@ -1,8 +1,11 @@
+'use client'
 import React from "react";
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import SidebarItem from "./SidebarItem";
 import { BiLogOut } from "react-icons/bi";
+
+import { signOut } from "next-auth/react";
 
 const items = [
   {
@@ -19,8 +22,10 @@ const items = [
     label: "Profile",
     href: "/users/123",
     icon: FaUser,
+    
   },
 ];
+
 
 function Sidebar() {
   return (
@@ -39,7 +44,7 @@ function Sidebar() {
             label={"Logout"}
             icon={BiLogOut}
             onClick={() => {
-              alert("logged out");
+              signOut();
             }}
           />
         </div>

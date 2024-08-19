@@ -20,6 +20,7 @@ const Input: React.FC<InputProps> = ({
       disabled={disabled}
       onChange={onChange}
       value={value}
+      type={type}
       placeholder={placeholder}
       className="
         w-full

@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { IconType } from "react-icons";
 
@@ -45,8 +46,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         rounded-full
         hover:bg-slate-300
         hover:bg-opacity-10
-        cursor: pointer
+        cursor-pointer
       "
+      onClick={onClick}
       >
         <Icon size={28} color="white" />
         <p className="hidden lg:block text-white text-xl">{label}</p>
