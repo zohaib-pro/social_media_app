@@ -69,7 +69,7 @@ export default NextAuth({
           return false; // Deny sign-in if user does not exist
         }
       }
-      return false; // Deny sign-in if user object is not present
+      return false;
     },
   },
   secret: process.env.NEXTAUTH_SECRET, // Ensure this is set in your environment
