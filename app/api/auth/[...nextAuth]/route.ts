@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../libs/prismadb";
 
-const authOptions =  {
+const authOptions: NextAuthOptions =  {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -13,7 +13,7 @@ const authOptions =  {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<any> {
         if (!credentials?.email || !credentials?.password) {
           console.log("email received", credentials?.email);
           console.error("error", "invalid credentials");
@@ -45,7 +45,7 @@ const authOptions =  {
     strategy: "jwt", // Use JWT for session management
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }:{token:any, user:any}) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -53,7 +53,7 @@ const authOptions =  {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: {session: any, token: any}) {
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
@@ -61,7 +61,7 @@ const authOptions =  {
       }
       return session;
     },
-    async signIn({ user, account, profile, credentials }) {
+    async signIn({ user}: {user:any}) {
       // Custom sign-in logic, if needed
       // Ensure that the user exists and any custom conditions are met
       if (user) {
