@@ -1,6 +1,9 @@
 "use client";
-import { onClose as onCloseRegister } from "@/app/store/RegisterModalSlice";
-import { onClose, onOpen as onOpenLogin } from "@/app/store/LoginModalSlice";
+import { onClose as onCloseRegister } from "@/app/store/slices/RegisterModalSlice";
+import {
+  onClose,
+  onOpen as onOpenLogin,
+} from "@/app/store/slices/LoginModalSlice";
 import { RootState } from "@/app/store/store";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,16 +34,16 @@ const RegisterModal = () => {
         name,
       });
 
-      if (response.status == 201){
+      if (response.status == 201) {
         toast.success("User Registration Successful!");
-      }else{
-        toast.error("Registration failed with error code: "+response.status);
+      } else {
+        toast.error("Registration failed with error code: " + response.status);
       }
 
       dispatch(onCloseRegister());
-    } catch (e:any) {
+    } catch (e: any) {
       console.log(e);
-      toast.success('test');
+      toast.success("test");
     } finally {
       setLoading(false);
     }
@@ -83,10 +86,13 @@ const RegisterModal = () => {
     <div className="text-neutral-400 text-center my-4">
       <p>
         Already have an account?&nbsp;
-        <span className="text-white cursor-pointer hover:underline" onClick={()=>{
-          dispatch(onOpenLogin());
-          dispatch(onCloseRegister());
-        }}>
+        <span
+          className="text-white cursor-pointer hover:underline"
+          onClick={() => {
+            dispatch(onOpenLogin());
+            dispatch(onCloseRegister());
+          }}
+        >
           Sign In
         </span>
       </p>

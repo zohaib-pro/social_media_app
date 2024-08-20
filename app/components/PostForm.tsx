@@ -6,6 +6,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Avatar from "./Avatar";
 import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { addPost } from "../store/slices/PostsSlice";
 
 interface PostFormProps {
   placeholder: string;
@@ -15,6 +17,8 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
   const { data: session } = useSession();
   const [isLoading, setLoading] = useState<boolean>();
   const [content, setContent] = useState("");
+
+  const dispatch = useDispatch();
 
   const submit = useCallback(async () => {
     if (!content) {
@@ -28,6 +32,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
       });
 
       if (response.status == 201) {
+        dispatch(addPost(response.data));
         toast.success("Post Created");
         setContent("");
         //setResults(JSON.stringify(response.data));

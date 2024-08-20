@@ -2,13 +2,15 @@
 // app/store.ts
 
 import { configureStore } from "@reduxjs/toolkit";
-import loginModalReducer from "./LoginModalSlice";
-import RegisterModalReducer from "./RegisterModalSlice";
+import loginModalReducer from "./slices/LoginModalSlice";
+import RegisterModalReducer from "./slices/RegisterModalSlice";
+import PostsReducer from "./slices/PostsSlice";
 
 const store = configureStore({
   reducer: {
     loginModal: loginModalReducer,
     registerModal: RegisterModalReducer,
+    posts: PostsReducer,
   },
 });
 

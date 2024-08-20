@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
@@ -7,11 +7,8 @@ import { BiLogOut } from "react-icons/bi";
 
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
-import { onOpen } from "@/app/store/LoginModalSlice";
+import { onOpen } from "@/app/store/slices/LoginModalSlice";
 import toast from "react-hot-toast";
-
-
-
 
 const items = [
   {
@@ -28,14 +25,12 @@ const items = [
     label: "Profile",
     href: "/users/123",
     icon: FaUser,
-    
   },
 ];
 
-
 function Sidebar() {
-const {data:session} = useSession();
-const dispatch = useDispatch();
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="flex flex-col items-end">
@@ -49,13 +44,11 @@ const dispatch = useDispatch();
             />
           ))}
           <SidebarItem
-            label={session?.user? "Logout" : "Login"}
+            label={session?.user ? "Logout" : "Login"}
             icon={BiLogOut}
             onClick={() => {
-              if (!session?.user)
-                dispatch(onOpen());
-              else
-                signOut();
+              if (!session?.user) dispatch(onOpen());
+              else signOut();
             }}
           />
         </div>

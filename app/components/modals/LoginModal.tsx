@@ -1,6 +1,6 @@
 "use client";
-import { onClose as onCloseLogin } from "@/app/store/LoginModalSlice";
-import { onOpen as onOpenRegister } from "@/app/store/RegisterModalSlice";
+import { onClose as onCloseLogin } from "@/app/store/slices/LoginModalSlice";
+import { onOpen as onOpenRegister } from "@/app/store/slices/RegisterModalSlice";
 import { RootState } from "@/app/store/store";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ const LoginModal = () => {
         email,
         password,
       });
-      console.log('login', res);
+      console.log("login", res);
       dispatch(onCloseLogin());
     } catch (e) {
       console.log(e);
@@ -39,7 +39,9 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4">
       <Input
         placeholder="Email"
-        onChange={(e) =>{setEmail(e.target.value)}}
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
         value={email}
         disabled={isLoading}
       />
@@ -58,10 +60,13 @@ const LoginModal = () => {
     <div className="text-neutral-400 text-center my-4">
       <p>
         Dont have an account?&nbsp;
-        <span className="text-white cursor-pointer hover:underline" onClick={()=>{
-          dispatch(onOpenRegister());
-          dispatch(onCloseLogin());
-        }}>
+        <span
+          className="text-white cursor-pointer hover:underline"
+          onClick={() => {
+            dispatch(onOpenRegister());
+            dispatch(onCloseLogin());
+          }}
+        >
           Sign Up
         </span>
       </p>

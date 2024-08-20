@@ -13,6 +13,7 @@ import Avatar from "./components/Avatar";
 import Button from "./components/Button";
 import TesterComponent from "./components/TesterComponent";
 import PostForm from "./components/PostForm";
+import PostFeed from "./components/posts/PostFeed";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
           <h1 className="text-sky-400 ">Home</h1>
           <Avatar userId={""} isLarge hasBorder />
           <PostForm placeholder="What's on your mind?" />
+          <PostFeed />
           <TesterComponent />
         </Layout>
       </ClientProviderWrapper>
