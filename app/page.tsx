@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import Avatar from "./components/Avatar";
 import Button from "./components/Button";
 import TesterComponent from "./components/TesterComponent";
+import PostForm from "./components/PostForm";
 
 export default function Home() {
   return (
@@ -25,7 +26,8 @@ export default function Home() {
           {/* <Navbar /> */}
           <MyComponent />
           <h1 className="text-sky-400 ">Home</h1>
-          <Avatar userId={''} isLarge hasBorder/>
+          <Avatar userId={""} isLarge hasBorder />
+          <PostForm placeholder="What's on your mind?" />
           <TesterComponent />
         </Layout>
       </ClientProviderWrapper>
