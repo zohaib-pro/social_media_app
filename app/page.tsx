@@ -12,7 +12,7 @@ import { Toaster } from "react-hot-toast";
 import Avatar from "./components/Avatar";
 import Button from "./components/Button";
 import TesterComponent from "./components/TesterComponent";
-import PostForm from "./components/PostForm";
+import PostForm from "./components/posts/PostForm";
 import PostFeed from "./components/posts/PostFeed";
 
 export default function Home() {

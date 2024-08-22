@@ -14,6 +14,7 @@ export async function POST(req: any) {
         content,
         authorId: currentUser?.id || 0,
       },
+      include: { author: true },
     });
 
     return NextResponse.json(post, { status: 201 });

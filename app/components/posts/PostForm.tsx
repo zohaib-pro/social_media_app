@@ -4,10 +4,10 @@ import { useSession } from "next-auth/react";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Avatar from "./Avatar";
-import Button from "./Button";
+import Avatar from "../Avatar";
+import Button from "../Button";
 import { useDispatch } from "react-redux";
-import { addPost } from "../store/slices/PostsSlice";
+import { addPost } from "../../store/slices/PostsSlice";
 
 interface PostFormProps {
   placeholder: string;
@@ -35,6 +35,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
         dispatch(addPost(response.data));
         toast.success("Post Created");
         setContent("");
+        setLoading(false);
         //setResults(JSON.stringify(response.data));
       } else {
         toast.error("Registration failed with error code: " + response.status);
