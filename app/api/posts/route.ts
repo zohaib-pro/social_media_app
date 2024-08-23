@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import serverAuth from "@/app/libs/serverAuth";
-import prisma from "../../libs/prismadb";
+import prisma from "@/app/libs/prismadb";
 export async function GET(req: any) {
   try {
     const currentUser = await serverAuth();

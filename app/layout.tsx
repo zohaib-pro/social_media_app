@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <AuthProvider session={session}>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className + " bg-black"}>{children}</body>
       </AuthProvider>
     </html>
   );

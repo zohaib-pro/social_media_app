@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import serverAuth from "@/app/libs/serverAuth";
-import prisma from "../../../libs/prismadb";
+import prisma from "@/app/libs/prismadb";
 export async function POST(req: any) {
   try {
     const currentUser = await serverAuth();
 
-    const { content } = await req.json();
+    const { content, image } = await req.json();
 
     //const post = {content, test: 'auto', currentUser}
 
@@ -13,9 +13,12 @@ export async function POST(req: any) {
       data: {
         content,
         authorId: currentUser?.id || 0,
+        image,
       },
       include: { author: true },
     });
+
+    //post.currentUser = currentUser;
 
     return NextResponse.json(post, { status: 201 });
     //return NextResponse.json(post, { status: 201 });

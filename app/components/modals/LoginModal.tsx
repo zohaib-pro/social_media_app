@@ -4,7 +4,7 @@ import { onOpen as onOpenRegister } from "@/app/store/slices/RegisterModalSlice"
 import { RootState } from "@/app/store/store";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Input from "../Input";
+import Input from "../form/Input";
 import Modal from "../Modal";
 
 import { signIn } from "next-auth/react";

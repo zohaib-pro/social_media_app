@@ -1,22 +1,33 @@
 "use client";
-import { User } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Avatar from "../Avatar";
 import Button from "../Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../store/slices/PostsSlice";
+
+import ImageUpload from "../form/ImageUpload";
+import usePost from "@/app/hooks/fetcher";
+import { RootState } from "@/app/store/store";
 
 interface PostFormProps {
   placeholder: string;
 }
 
 const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
+  const {
+    data: postResults,
+    post: postPost,
+    loading,
+    error,
+  } = usePost("/api/posts/create");
   const { data: session } = useSession();
-  const [isLoading, setLoading] = useState<boolean>();
   const [content, setContent] = useState("");
+  const [postImage, setPostImage] = useState("");
+  const thisUserState = useSelector((state: RootState) => state.thisUser);
 
   const dispatch = useDispatch();
 
@@ -25,26 +36,29 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
       toast.error("Post empty!");
       return;
     }
-    setLoading(true);
-    try {
-      const response = await axios.post("/api/posts/create", {
-        content,
-      });
+    postPost({ content, image: postImage });
+  }, [content, postImage]);
 
-      if (response.status == 201) {
-        dispatch(addPost(response.data));
-        toast.success("Post Created");
-        setContent("");
-        setLoading(false);
-        //setResults(JSON.stringify(response.data));
-      } else {
-        toast.error("Registration failed with error code: " + response.status);
-      }
-    } catch (e: any) {
-      console.log(e);
-      toast.error("error at posting");
+  useEffect(() => {
+    if (error) {
+      toast.error("Failed to create post!");
     }
-  }, [content]);
+  }, [error]);
+
+  useEffect(() => {
+    if (postResults) {
+      const newPost = postResults as Post;
+      dispatch(addPost(newPost));
+      console.log(postResults);
+      toast.success("Post Created");
+      setContent("");
+      toast.success("Post Created Successfully");
+    }
+  }, [postResults]);
+
+  useEffect(() => {
+    alert(thisUserState?.data?.profileImage);
+  }, [thisUserState.data]);
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -56,16 +70,21 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
         <div className="flex flex-row items-center justify-center gap-4"></div>
 
         {session?.user && (
-          <div className="flex flex-row gap-4">
-            <div>
-              <Avatar userId={session.user.email || ""} />
-            </div>
-            <div className="w-full">
-              <textarea
-                disabled={isLoading}
-                onChange={(e) => setContent(e.target.value)}
-                value={content}
-                className="
+          <div>
+            <div className="flex flex-row gap-4">
+              <div className="flex">
+                <Avatar
+                  userId={""}
+                  user={thisUserState.data}
+                  borderColor="border-sky-500"
+                />
+              </div>
+              <div className="w-full">
+                <textarea
+                  disabled={loading}
+                  onChange={(e) => setContent(e.target.value)}
+                  value={content}
+                  className="
                 opacity-80 
                 peer 
                 resize 
@@ -78,13 +97,15 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
                 placeholder-neutral-500 
                 text-white
                 "
-                placeholder={placeholder}
-              ></textarea>
+                  placeholder={placeholder}
+                ></textarea>
 
-              <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 trasition" />
-              <div className="mt-4 flex flex-row justify-end">
-                <Button disabled={isLoading} onClick={submit} label="post" />
+                <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 trasition" />
               </div>
+            </div>
+            <ImageUpload label="Add Image here" onChange={setPostImage} />
+            <div className="mt-4 flex flex-row justify-end">
+              <Button disabled={loading} onClick={submit} label="post" />
             </div>
           </div>
         )}

@@ -46,4 +46,51 @@ const useGet = <T>(
   return { data, loading, error };
 };
 
-export { useGet };
+// Define a type for the hook's response
+interface UsePostResponse<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  post: (payload: any) => Promise<void>;
+}
+
+// Define the hook
+const usePost = <T>(url: string): UsePostResponse<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const post = async (payload: any): Promise<void> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        // Handle HTTP errors
+        const errorText = await response.text();
+        throw new Error(errorText || "An error occurred");
+      }
+
+      const result: T = await response.json();
+      setData(result);
+    } catch (err: any) {
+      setError(err.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { data, loading, error, post };
+};
+
+export default usePost;
+
+export { useGet, usePost };

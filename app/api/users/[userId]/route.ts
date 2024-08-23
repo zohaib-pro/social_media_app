@@ -1,19 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../libs/prismadb";
+import prisma from "@/app/libs/prismadb";
 import { getQuery } from "@/app/utils/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const email = getQuery(request.url);
-    if (!email) {
+    const userId = getQuery(request.url);
+    if (!userId) {
       return NextResponse.json(
         { error: "Email not provided" },
         { status: 400 }
       );
     }
 
+    const userIdInt = parseInt(userId);
+
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { id: userIdInt },
     });
 
     if (!user) {

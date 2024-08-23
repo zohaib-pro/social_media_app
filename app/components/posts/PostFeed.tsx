@@ -48,10 +48,12 @@ const PostFeed = () => {
   }
 
   return (
-    <div className="text-white">
-      {postsState.data.map((post) => (
-        <PostItem key={post.id} post={post} />
-      ))}
+    <div className="flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto text-white">
+        {postsState.data.map((post) => (
+          <PostItem key={post.id} _post={post} />
+        ))}
+      </div>
     </div>
   );
 };
