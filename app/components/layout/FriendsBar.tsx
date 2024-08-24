@@ -28,7 +28,7 @@ function FriendsBar() {
     }
 
     if (session?.data?.user && users) {
-      const thisUser = users.find((user) => session?.data?.user.id);
+      const thisUser = users.find((user) => session?.data?.user?.id);
       if (thisUser) dispatch(setThisUser(thisUser));
       console.log("setting this user: ", thisUser);
     } else {
@@ -37,7 +37,9 @@ function FriendsBar() {
   }, [users, session?.data?.user]);
   return (
     <div className="px-6 py-4 lg-block">
-      <div className="bg-neutral-800 rounded-xl p-4">
+    
+    <div className="fixed">
+    <div className="bg-neutral-800 rounded-xl p-4">
         <div className="text-white text-xl font-semibold">Friends</div>
         <div className="flex flex-col gap-6 mt-4">
           {usersState.data.map((user) => (
@@ -51,6 +53,7 @@ function FriendsBar() {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }

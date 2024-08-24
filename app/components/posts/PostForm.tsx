@@ -51,6 +51,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
       dispatch(addPost(newPost));
       console.log(postResults);
       setContent("");
+      setPostImage("");
       toast.success("Post Created Successfully");
     }
   }, [postResults]);
@@ -102,7 +103,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
                 <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 trasition" />
               </div>
             </div>
-            <ImageUpload label="Add Image here" onChange={setPostImage} />
+            <ImageUpload value={postImage} label="Add Image here" onChange={setPostImage} />
             <div className="mt-4 flex flex-row justify-end">
               <Button disabled={loading} onClick={submit} label="post" />
             </div>
