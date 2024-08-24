@@ -50,14 +50,13 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
       const newPost = postResults as Post;
       dispatch(addPost(newPost));
       console.log(postResults);
-      toast.success("Post Created");
       setContent("");
       toast.success("Post Created Successfully");
     }
   }, [postResults]);
 
   useEffect(() => {
-    alert(thisUserState?.data?.profileImage);
+    //alert(thisUserState?.data?.profileImage);
   }, [thisUserState.data]);
 
   return (

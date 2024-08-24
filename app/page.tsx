@@ -33,7 +33,7 @@ export default function Home() {
           {/* <MyComponent /> */}
           <h1 className="text-sky-400 ">Home</h1>
           {/* <Avatar user={session?.user} userId={""} isLarge hasBorder /> */}
-          {/* <UserView /> */}
+          <UserView />
           <PostForm placeholder="What's on your mind?" />
 
           <PostFeed />

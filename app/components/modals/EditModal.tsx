@@ -10,6 +10,9 @@ import toast from "react-hot-toast";
 import ImageUpload from "../form/ImageUpload";
 
 import usePost from "@/app/hooks/fetcher";
+import { User } from "@prisma/client";
+import { updateData } from "@/app/store/slices/UsersSlice";
+import { setThisUser } from "@/app/store/slices/ThisUserSlice";
 
 const EditModal = () => {
   const {
@@ -17,17 +20,30 @@ const EditModal = () => {
     data: editResultsData,
     error,
     loading,
-  } = usePost("/api/users/edit");
+  } = usePost<User>("/api/users/edit");
+  
+  const editModalState = useSelector((state: RootState) => state.editModal);
+  const thisUserState = useSelector((state: RootState) => state.thisUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [name, setName] = useState("");
-  const [profileImage, setProfileimage] = useState("");
-  const [coverImage, setCoverImage] = useState("");
+  const [profileImage, setProfileimage] = useState<string|null>("");
+  const [coverImage, setCoverImage] = useState<string | null>();
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const eidtModalState = useSelector((state: RootState) => state.editModal);
+  useEffect(()=>{
+    const user = thisUserState.data as User;
+    if (user){
+      setEmail(user.email);
+    setProfileimage(user.profileImage);
+    setCoverImage(user.coverImage);
+    setName(user.name);
+    }
+  }, [thisUserState.data]);
+
+
 
   const onSubmit = useCallback(async () => {
     postEditData({ email, name, profileImage, coverImage });
@@ -41,7 +57,9 @@ const EditModal = () => {
     if (editResultsData) {
       toast.success("User profile updated successfully");
       dispatch(onCloseEdit());
-      console.log(editResultsData);
+      dispatch(setThisUser(editResultsData));
+      //console.log(editResultsData);
+      //updateData(editResultsData);
     }
   }, [editResultsData]);
 
@@ -60,7 +78,7 @@ const EditModal = () => {
         disabled={isLoading}
       />
 
-      <ImageUpload onChange={setProfileimage} label="Profile Image" />
+      <ImageUpload value={profileImage || ""} onChange={setProfileimage} label="Profile Image" />
       <ImageUpload onChange={setCoverImage} label="Cover Image" />
 
       {/* <Input
@@ -84,7 +102,7 @@ const EditModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={eidtModalState.isOpen}
+      isOpen={editModalState.isOpen}
       title="Edit Profile"
       actionLabel="Save"
       onClose={() => dispatch(onCloseEdit())}

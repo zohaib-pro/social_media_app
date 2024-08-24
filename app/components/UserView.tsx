@@ -1,7 +1,7 @@
 "use client";
 import { User } from "@prisma/client";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useGet } from "../hooks/fetcher";
 import { ClipLoader } from "react-spinners";
@@ -11,7 +11,8 @@ import { RootState } from "@/app/store/store";
 const UserView = () => {
   //const router = useRouter();
   const thisUserState = useSelector((state: RootState) => state.thisUser);
-  return true ? (
+
+  return !thisUserState.data ? (
     <div className="flex justify-center items-center h-full ">
       <ClipLoader color="lightblue" size={80} />
     </div>

@@ -8,6 +8,7 @@ import Input from "../form/Input";
 import Modal from "../Modal";
 
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const LoginModal = () => {
   const [email, setEmail] = useState("");
@@ -26,10 +27,13 @@ const LoginModal = () => {
         email,
         password,
       });
-      console.log("login", res);
-      dispatch(onCloseLogin());
+      //console.log("login", res);
+      if (res?.status == 401)
+        toast.error('Invalid Credentials!');
+      else
+        dispatch(onCloseLogin());
     } catch (e) {
-      console.log(e);
+      toast.error('Login Server Error!');
     } finally {
       setLoading(false);
     }

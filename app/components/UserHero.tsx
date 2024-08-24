@@ -24,7 +24,7 @@ const UserHero: React.FC<UserHeroProps> = ({ user }) => {
     <div>
       <div className="bg-neutral-700 h-44 relative">
         <Image
-          src={user?.coverImage || ""}
+          src={user?.coverImage || "/images/cover_placeholder.png"}
           alt="cover image"
           fill
           style={{ objectFit: "cover" }}

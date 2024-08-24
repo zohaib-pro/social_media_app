@@ -24,6 +24,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     [onChange]
   );
 
+  console.log("value changed");
+
   const handleDrop = useCallback(
     (files: any) => {
       const file = files[0];

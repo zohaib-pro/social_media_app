@@ -16,8 +16,14 @@ const usersSlice = createSlice({
     setUsers(state, action: PayloadAction<User[]>) {
       state.data = action.payload;
     },
+    updateData(state, action: PayloadAction<User>) {
+      const targetUser = state.data.find(item => item.id == action.payload.id);
+      if (targetUser){
+        targetUser.email = action.payload.email;
+      }
+    }
   },
 });
 
-export const { setUsers } = usersSlice.actions;
+export const { setUsers, updateData } = usersSlice.actions;
 export default usersSlice.reducer;

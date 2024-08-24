@@ -29,7 +29,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
       {/* Post Header */}
       <div className="flex items-start space-x-3 mb-4">
         <img
-          src={post.author?.profileImage || "/default-profile.png"}
+          src={post.author?.profileImage || "/images/placeholder.png"}
           alt={post.author?.name || "Profile"}
           className="w-12 h-12 rounded-full object-cover"
         />
@@ -42,7 +42,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
               <span>@{new Date(post.createdAt).toLocaleDateString()}</span>
             </p>
           </div>
-
+          
           {/* Post Content */}
           <p className="text-white text-base mb-3">{post.content}</p>
 
@@ -51,7 +51,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
             <img
               src={post.image}
               alt={post.content}
-              className="w-full h-60 object-cover rounded-xl mb-4"
+              className="w-full object-cover rounded-xl mb-4"
             />
           )}
         </div>
