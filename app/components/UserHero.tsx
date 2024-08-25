@@ -21,7 +21,7 @@ const UserHero: React.FC<UserHeroProps> = ({ user }) => {
   }, []);
 
   return (
-    <div>
+    <div className={""/*"sticky top-0 bg-black rounded-md" */}>
       <div className="bg-neutral-700 h-44 relative">
         <Image
           src={user?.coverImage || "/images/cover_placeholder.png"}

@@ -11,9 +11,12 @@ import Input from "../form/Input";
 import Modal from "../Modal";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ObjInterface } from "@/app/interfaces/interfaces";
 
 const RegisterModal = () => {
+  const [errors, setErrors] = useState<ObjInterface>({});
   const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [name, setName] = useState("");
@@ -26,8 +29,33 @@ const RegisterModal = () => {
 
   const onSubmit = useCallback(async () => {
     try {
-      setLoading(true);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var isError = false;
 
+      if (!name || name.length < 3) {
+        errors.name = "Invalid name!";
+        isError = true;
+      }
+
+      if (!emailRegex.test(email)) {
+        errors.email = "Invalid email";
+        //setErrors({...errors, email: 'Invalid Email!'});
+        isError = true;
+      }
+
+      if (!password || password.length < 8) {
+        errors.password = "Password must be 8 chars at least!";
+        //setErrors(errors);
+        //setErrors({...errors, password: 'Password must be 8 chars at least!'})
+        isError = true;
+      }
+
+      const newErrors = { ...errors };
+      setErrors(newErrors);
+      console.log("errors: ", errors);
+
+      if (isError) return;
+      setLoading(true);
       const response = await axios.post("/api/users/register", {
         email,
         password,
@@ -53,20 +81,28 @@ const RegisterModal = () => {
     <div className="flex flex-col gap-4">
       <Input
         placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
+        error={errors.name}
+        onChange={(e) => {setName(e.target.value); setErrors({...errors, name: ""})}}
         value={name}
         disabled={isLoading}
       />
       <Input
         placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setEmail(e.target.value), setErrors({ ...errors, email: "" });
+        }}
         value={email}
+        error={errors.email}
         disabled={isLoading}
       />
 
       <Input
         placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          setErrors({ ...errors, password: "" });
+        }}
+        error={errors.password}
         value={password}
         type="password"
         disabled={isLoading}

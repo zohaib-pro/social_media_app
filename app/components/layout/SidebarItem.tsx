@@ -16,7 +16,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   onClick,
 }) => {
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center" onClick={onClick}>
       <div
         className="
         relative

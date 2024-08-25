@@ -14,17 +14,25 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  name          String
-  email         String   @unique
-  hashedPassword String
-  image         String?  // Optional field for any general image
-  coverImage    String?  // Optional field for the cover image
-  profileImage  String?  // Optional field for the profile image
-  createdAt     DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt     DateTime @updatedAt @db.Timestamptz(6)
+  id              Int               @id @default(autoincrement())
+  name            String
+  email           String            @unique
+  hashedPassword  String
+  image           String?           // Optional field for any general image
+  coverImage      String?           // Optional field for the cover image
+  profileImage    String?           // Optional field for the profile image
+  createdAt       DateTime          @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime          @updatedAt @db.Timestamptz(6)
 
-  posts         Post[]   // One-to-many relationship with Post
+  posts           Post[]            // One-to-many relationship with Post
+  comments        Comment[]         // One-to-many relationship with Comment
+  likes           Like[]            // One-to-many relationship with Like
+  sentRequests    FriendRequest[]   @relation("SentRequests")
+  receivedRequests FriendRequest[]  @relation("ReceivedRequests")
+  
+  // Many-to-many relationships
+  friendsAsUser   Friend[]          @relation("UserFriends")
+  friendsAsFriend Friend[]          @relation("FriendUsers")
 }
 
 model Post {
@@ -35,4 +43,48 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
+
+  comments  Comment[] // One-to-many relationship with Comment
+  likes     Like[]    // One-to-many relationship with Like
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  postId    Int      // Foreign key to Post
+  post      Post     @relation(fields: [postId], references: [id])
+  authorId  Int      // Foreign key to User
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  postId    Int      // Foreign key to Post
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    Int      // Foreign key to User
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model FriendRequest {
+  id          Int      @id @default(autoincrement())
+  senderId    Int      // Foreign key to User (sender)
+  sender      User     @relation("SentRequests", fields: [senderId], references: [id])
+  receiverId  Int      // Foreign key to User (receiver)
+  receiver    User     @relation("ReceivedRequests", fields: [receiverId], references: [id])
+  status      String   // e.g., "pending", "accepted", "rejected"
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model Friend {
+  id         Int      @id @default(autoincrement())
+  userId     Int      // Foreign key to User (friend 1)
+  user       User     @relation("UserFriends", fields: [userId], references: [id])
+  friendId   Int      // Foreign key to User (friend 2)
+  friend     User     @relation("FriendUsers", fields: [friendId], references: [id])
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([userId, friendId]) // Ensure a unique pair of friends
 }

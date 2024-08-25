@@ -38,6 +38,7 @@ export const authOptions: NextAuthOptions = {
         // If authentication fails
         console.error("error", "invalid credentials 2");
         //throw new Error("Invalid credentials");
+        return null;
       },
     }),
   ],

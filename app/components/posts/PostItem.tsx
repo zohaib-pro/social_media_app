@@ -1,5 +1,11 @@
 import { Post, User } from "@prisma/client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import Input from "../form/Input";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import Button from "../Button";
+import Commenter from "./Commenter";
+import toast, { Toaster } from "react-hot-toast";
 
 interface PostItemProps {
   _post: Post;
@@ -7,14 +13,18 @@ interface PostItemProps {
 
 interface PostPlusAuthor extends Post {
   author: User;
-  comments: string[];
+  comments: {text: string, authorName: string, id: number}[]
 }
 
 const PostItem: React.FC<PostItemProps> = ({ _post }) => {
   // Example state to manage likes (you might want to manage likes server-side)
   const [likes, setLikes] = useState(0);
 
+  const thisUserState = useSelector((state: RootState) => state.thisUser);
+
   const post = _post as PostPlusAuthor;
+
+  const [comments, setComments] = useState(post.comments || []);
   // Function to handle like button click
   const handleLike = () => {
     setLikes(likes + 1);
@@ -42,7 +52,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
               <span>@{new Date(post.createdAt).toLocaleDateString()}</span>
             </p>
           </div>
-          
+
           {/* Post Content */}
           <p className="text-white text-base mb-3">{post.content}</p>
 
@@ -97,20 +107,26 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
       <div className="mt-4">
         <h2 className="text-white text-lg font-semibold mb-2">Comments:</h2>
         {/* You can map over comments if you have them */}
-        {post.comments && post.comments.length > 0 ? (
+        {comments && comments.length > 0 ? (
           <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            {post.comments.map((comment) => (
+            {comments.map((comment) => (
               <div>
-                {/* <li key={comment.id}>
+                <li key={comment.id}>
                   <span className="font-semibold">{comment.authorName}:</span>{" "}
                   {comment.text}
-                </li> */}
+                </li>
               </div>
             ))}
           </ul>
         ) : (
           <p className="text-gray-500">No comments yet.</p>
         )}
+        <Commenter
+          onAddComment={(comment) => {
+            toast.success("Comment Added");
+            setComments([...comments, {text: comment, authorName: thisUserState.data?.name || "", id: 0}]);
+          }}
+        />
       </div>
     </div>
   );

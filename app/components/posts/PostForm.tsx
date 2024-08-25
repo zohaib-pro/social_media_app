@@ -63,7 +63,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
       <div className="py-8">
-        <h1 className="text-white text-2xl text-center font-bold mb-4">
+        <h1 className="text-white text-2xl text-center font-bold mb-4 ">
           Welcome to Social Media App
         </h1>
 
