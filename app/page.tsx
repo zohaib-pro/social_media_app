@@ -17,6 +17,7 @@ import PostForm from "./components/posts/PostForm";
 import PostFeed from "./components/posts/PostFeed";
 import UserView from "./components/UserView";
 import { useSession } from "next-auth/react";
+import SocketTest from "./components/SocketTest";
 
 export default function Home() {
   //const { data: session, status } = useSession();
@@ -34,6 +35,7 @@ export default function Home() {
           <h1 className="text-sky-400 ">Home</h1>
           {/* <Avatar user={session?.user} userId={""} isLarge hasBorder /> */}
           <UserView />
+          <SocketTest />
           <PostForm placeholder="What's on your mind?" />
 
           <PostFeed />

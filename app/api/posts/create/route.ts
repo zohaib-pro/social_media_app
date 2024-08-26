@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import serverAuth from "@/app/libs/serverAuth";
 import prisma from "@/app/libs/prismadb";
+import { communicate } from "@/app/libs/SocketCommunicator";
 export async function POST(req: any) {
   try {
     const currentUser = await serverAuth();
@@ -17,8 +18,6 @@ export async function POST(req: any) {
       },
       include: { author: true },
     });
-
-    //post.currentUser = currentUser;
 
     return NextResponse.json(post, { status: 201 });
     //return NextResponse.json(post, { status: 201 });

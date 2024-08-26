@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { getQuery } from "@/app/utils/server";
 import serverAuth from "@/app/libs/serverAuth";
+import { communicate } from "@/app/libs/SocketCommunicator";
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,6 +42,25 @@ export async function POST(request: NextRequest) {
           userId: currentUser.id,
         },
       });
+
+      //get whose post was liked
+      const post = await prisma.post.findUnique({
+        where: { id: postIdInt },
+        include: { author: true },
+      });
+
+      if (post) {
+        const newNotification = await prisma.notification.create({
+          data: {
+            userId: post.authorId,
+            message: `${currentUser.name} liked your post`,
+            type: "Like",
+          },
+        });
+
+        communicate("/notify", newNotification);
+      }
+
       return NextResponse.json(newLike, { status: 201 });
     }
 
