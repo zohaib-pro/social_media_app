@@ -1,4 +1,4 @@
-import { Comment, Post, User } from "@prisma/client";
+import { Comment, Post, User, Like } from "@prisma/client";
 import React, { useCallback, useState } from "react";
 import Input from "../form/Input";
 import { useSelector } from "react-redux";
@@ -8,14 +8,18 @@ import Commenter from "./Commenter";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import CommentsList from "./CommentsList";
+import Avatar from "../Avatar";
+import AutoImage from "../AutoImage";
+import Liker from "./Liker";
 
 interface PostItemProps {
   _post: Post;
 }
 
-interface PostPlusAuthor extends Post {
+interface PostPlus extends Post {
   author: User;
   comments: Comment[];
+  likes: Like[];
 }
 
 const PostItem: React.FC<PostItemProps> = ({ _post }) => {
@@ -24,7 +28,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
 
   const thisUserState = useSelector((state: RootState) => state.thisUser);
 
-  const post = _post as PostPlusAuthor;
+  const post = _post as PostPlus;
 
   const [comments, setComments] = useState(post.comments || []);
   // Function to handle like button click
@@ -40,11 +44,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
     >
       {/* Post Header */}
       <div className="flex items-start space-x-3 mb-4">
-        <img
-          src={post.author?.profileImage || "/images/placeholder.png"}
-          alt={post.author?.name || "Profile"}
-          className="w-12 h-12 rounded-full object-cover"
-        />
+        <Avatar user={post.author} />
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <h1 className="text-white text-lg font-semibold">
@@ -65,45 +65,19 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
               alt={post.content}
               className="w-full object-cover rounded-xl mb-4"
             />
+            // <AutoImage src={post.image} alt={"Post"} />
+            // <Image
+            //   className="w-full object-cover"
+            //   layout="responsive"
+            //   style={{}}
+            //   alt="post image"
+            //   src={post.image || "/images/placeholder.png"}
+            // />
           )}
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex items-center space-x-4 text-gray-300">
-        <button
-          onClick={handleLike}
-          className="flex items-center space-x-1 hover:text-blue-400 transition"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
-          <span>{likes}</span>
-        </button>
-        <button className="flex items-center space-x-1 hover:text-blue-400 transition">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M14 2v12.11a4.992 4.992 0 0 0-1-.11c-2.21 0-4 1.79-4 4s1.79 4 4 4c1.09 0 2.09-.4 2.88-1.05A5.988 5.988 0 0 0 14 18v4h4v-4h-2v-2h2V4h-4z" />
-          </svg>
-        </button>
-      </div>
+      <Liker postId={post.id} likes={post.likes} />
       <CommentsList postId={post.id} comments={post.comments} />
     </div>
   );

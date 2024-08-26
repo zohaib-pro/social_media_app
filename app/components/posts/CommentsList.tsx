@@ -30,7 +30,9 @@ const CommentsList: React.FC<CommentsListProps> = ({
 
   return (
     <div className="mt-4">
-      <h2 className="text-white text-lg font-semibold mb-2">Comments:</h2>
+      <h2 className="text-white text-lg font-semibold mb-2">
+        Comments: <span className="">{comments.length}</span>
+      </h2>
 
       {comments.length > 0 ? (
         <ul className="list-disc pl-5 space-y-2 text-gray-300">

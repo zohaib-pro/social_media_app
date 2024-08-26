@@ -20,6 +20,7 @@ const items = [
     label: "Notifications",
     href: "/notifications",
     icon: BsBellFill,
+    hasDot: true,
   },
   {
     label: "Profile",
@@ -34,26 +35,27 @@ function Sidebar() {
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="fixed">
-      <div className="flex flex-col items-end">
-        <div className="space-y-2 lg:w-[230px]">
-          {items.map((item) => (
+        <div className="flex flex-col items-end">
+          <div className="space-y-2 lg:w-[230px]">
+            {items.map((item) => (
+              <SidebarItem
+                key={item.href}
+                label={item.label}
+                icon={item.icon}
+                href={item.href}
+                hasDot={item.hasDot}
+              />
+            ))}
             <SidebarItem
-              key={item.href}
-              label={item.label}
-              icon={item.icon}
-              href={item.href}
+              label={session?.user ? "Logout" : "Login"}
+              icon={BiLogOut}
+              onClick={() => {
+                if (!session?.user) dispatch(onOpen());
+                else signOut();
+              }}
             />
-          ))}
-          <SidebarItem
-            label={session?.user ? "Logout" : "Login"}
-            icon={BiLogOut}
-            onClick={() => {
-              if (!session?.user) dispatch(onOpen());
-              else signOut();
-            }}
-          />
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ export async function GET(req: any) {
       orderBy: { updatedAt: "desc" },
       include: {
         author: true,
+        likes: true,
         comments: { include: { author: true }, orderBy: { updatedAt: "desc" } },
       },
     });
