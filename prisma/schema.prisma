@@ -33,6 +33,8 @@ model User {
   // Many-to-many relationships
   friendsAsUser   Friend[]          @relation("UserFriends")
   friendsAsFriend Friend[]          @relation("FriendUsers")
+
+  notifications   Notification[]    // One-to-many relationship with Notification
 }
 
 model Post {
@@ -87,4 +89,14 @@ model Friend {
   createdAt  DateTime @default(now()) @db.Timestamptz(6)
 
   @@unique([userId, friendId]) // Ensure a unique pair of friends
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  userId      Int      // Foreign key to User
+  user        User     @relation(fields: [userId], references: [id])
+  type        String   // Type of notification (e.g., "like", "comment", "friend_request")
+  message     String   // Message content or details of the notification
+  read        Boolean  @default(false) // Indicates whether the notification has been read
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
 }

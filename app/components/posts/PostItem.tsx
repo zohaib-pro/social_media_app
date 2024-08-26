@@ -1,4 +1,4 @@
-import { Post, User } from "@prisma/client";
+import { Comment, Post, User } from "@prisma/client";
 import React, { useCallback, useState } from "react";
 import Input from "../form/Input";
 import { useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { RootState } from "@/app/store/store";
 import Button from "../Button";
 import Commenter from "./Commenter";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
+import CommentsList from "./CommentsList";
 
 interface PostItemProps {
   _post: Post;
@@ -13,7 +15,7 @@ interface PostItemProps {
 
 interface PostPlusAuthor extends Post {
   author: User;
-  comments: {text: string, authorName: string, id: number}[]
+  comments: Comment[];
 }
 
 const PostItem: React.FC<PostItemProps> = ({ _post }) => {
@@ -102,32 +104,7 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
           </svg>
         </button>
       </div>
-
-      {/* Comments Section */}
-      <div className="mt-4">
-        <h2 className="text-white text-lg font-semibold mb-2">Comments:</h2>
-        {/* You can map over comments if you have them */}
-        {comments && comments.length > 0 ? (
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            {comments.map((comment) => (
-              <div>
-                <li key={comment.id}>
-                  <span className="font-semibold">{comment.authorName}:</span>{" "}
-                  {comment.text}
-                </li>
-              </div>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">No comments yet.</p>
-        )}
-        <Commenter
-          onAddComment={(comment) => {
-            toast.success("Comment Added");
-            setComments([...comments, {text: comment, authorName: thisUserState.data?.name || "", id: 0}]);
-          }}
-        />
-      </div>
+      <CommentsList postId={post.id} comments={post.comments} />
     </div>
   );
 };
