@@ -3,10 +3,13 @@ import prisma from "@/app/libs/prismadb";
 import { getQuery } from "@/app/utils/server";
 import serverAuth from "@/app/libs/serverAuth";
 import { communicate } from "@/app/libs/SocketCommunicator";
+import { NotAuthenticated } from "@/app/libs/Authenticator";
 
 export async function POST(request: NextRequest) {
   try {
     const currentUser = await serverAuth();
+    if (!currentUser) return NotAuthenticated();
+
     const postId = getQuery(request.url);
     console.log(postId);
     if (!postId || !currentUser) {
