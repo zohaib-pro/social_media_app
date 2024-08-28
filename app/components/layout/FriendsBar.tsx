@@ -29,8 +29,9 @@ function FriendsBar() {
       initialLoad.current = false;
     }
 
+    const sUser = session?.data?.user as User;
     if (session?.data?.user && users) {
-      const thisUser = users.find((user) => session?.data?.user?.id == user.id);
+      const thisUser = users.find((user) => sUser.id == user.id);
       if (thisUser) dispatch(setThisUser(thisUser));
       console.log("setting this user: ", thisUser);
     } else {

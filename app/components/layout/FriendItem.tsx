@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import Avatar from "../Avatar";
 import { User } from "@prisma/client";
 import { FaPlusCircle, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 interface FriendItemProps {
   user: User;
@@ -11,6 +13,7 @@ interface FriendItemProps {
 const FriendItem: React.FC<FriendItemProps> = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
   const handleFriendShip = () => {
+    toast.success(isFriend ? "Friend Removed" : "Friend request sent");
     setIsFriend(!isFriend);
   };
   return (

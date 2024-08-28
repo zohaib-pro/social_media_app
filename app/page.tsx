@@ -25,7 +25,7 @@ export default function Home() {
     <main className="bg-black">
       {/* <Navbar /> */}
       {/* <MyComponent /> */}
-      <h1 className="text-sky-400 ">Home</h1>
+      <h1 className="text-sky-400 font-bold text-3xl">Home</h1>
       {/* <Avatar user={session?.user} userId={""} isLarge hasBorder /> */}
       <UserView />
       <SocketTest />

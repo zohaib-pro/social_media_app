@@ -50,8 +50,6 @@ function Sidebar() {
               label={session?.user ? "Logout" : "Login"}
               icon={session?.user ? BiLogOut : BiLogIn}
               onClick={() => {
-                alert("test");
-                console.log(!!session && session.user);
                 if (!session?.user) dispatch(onOpen());
                 else signOut();
               }}
