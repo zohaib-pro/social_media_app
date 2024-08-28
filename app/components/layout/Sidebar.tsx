@@ -3,7 +3,7 @@ import React from "react";
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import SidebarItem from "./SidebarItem";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiLogIn } from "react-icons/bi";
 
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -18,13 +18,13 @@ const items = [
   },
   {
     label: "Notifications",
-    href: "/notifications",
+    href: "/pages/notifications",
     icon: BsBellFill,
     hasDot: true,
   },
   {
     label: "Profile",
-    href: "/users/123",
+    href: "/pages/users",
     icon: FaUser,
   },
 ];
@@ -48,8 +48,10 @@ function Sidebar() {
             ))}
             <SidebarItem
               label={session?.user ? "Logout" : "Login"}
-              icon={BiLogOut}
+              icon={session?.user ? BiLogOut : BiLogIn}
               onClick={() => {
+                alert("test");
+                console.log(!!session && session.user);
                 if (!session?.user) dispatch(onOpen());
                 else signOut();
               }}

@@ -22,7 +22,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    if (onClick) return onClick;
+    if (onClick) {
+      onClick();
+      return;
+    }
 
     if (href) {
       router.push(href);
