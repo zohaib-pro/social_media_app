@@ -45,7 +45,7 @@ const Liker: React.FC<LikerProps> = ({ likes: _likes, postId }) => {
     if (error) {
       toast.error("Failed to like!");
     }
-  }, [isLiked, likeResults, error, setLikes, thisUser.data]);
+  }, [isLiked, likeResults, error, setLikes, thisUser.data, likes]);
 
   useEffect(() => {
     if (
@@ -61,8 +61,8 @@ const Liker: React.FC<LikerProps> = ({ likes: _likes, postId }) => {
         className="flex items-center space-x-1 hover:text-blue-400 transition"
         onClick={handleClick}
       >
-        {isLiked ? <FaHeart size={28} /> : <FaRegHeart size={28} />}
-        <span className="text-2xl">{likes.length}</span>
+        {isLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+        <span className="text-xl">{likes.length}</span>
       </button>
     </div>
   );

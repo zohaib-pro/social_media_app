@@ -18,10 +18,10 @@ const UserHero: React.FC<UserHeroProps> = ({ user }) => {
   const editModalState = useSelector((state: RootState) => state.editModal);
   const handleEdit = useCallback(() => {
     dispatch(onOpen());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div className={""/*"sticky top-0 bg-black rounded-md" */}>
+    <div className={"" /*"sticky top-0 bg-black rounded-md" */}>
       <div className="bg-neutral-700 h-44 relative">
         <Image
           src={user?.coverImage || "/images/cover_placeholder.png"}

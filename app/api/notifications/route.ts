@@ -4,11 +4,12 @@ import { getQuery } from "@/app/utils/server";
 import serverAuth from "@/app/libs/serverAuth";
 import { NotAuthenticated } from "@/app/libs/Authenticator";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const currentUser = await serverAuth();
     if (!currentUser) return NotAuthenticated();
 
+    const { isRead } = await request.json();
     const notifications = await prisma.notification.findMany({
       where: { userId: currentUser.id },
     });

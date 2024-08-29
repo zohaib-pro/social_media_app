@@ -6,6 +6,7 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Font Awesome ico
 interface CommentsListProps {
   comments: Comment[];
   postId: number;
+  onNewComment: (count: number) => void;
 }
 
 interface CommentPlusAuthor extends Comment {
@@ -15,6 +16,7 @@ interface CommentPlusAuthor extends Comment {
 const CommentsList: React.FC<CommentsListProps> = ({
   comments: _comments,
   postId,
+  onNewComment,
 }) => {
   const [showAll, setShowAll] = useState(false);
   const [comments, setComments] = useState(_comments);
@@ -30,10 +32,6 @@ const CommentsList: React.FC<CommentsListProps> = ({
 
   return (
     <div className="mt-4">
-      <h2 className="text-white text-lg font-semibold mb-2">
-        Comments: <span className="">{comments.length}</span>
-      </h2>
-
       {comments.length > 0 ? (
         <ul className="list-disc pl-5 space-y-2 text-gray-300">
           {/* Render the first comment if it exists */}
@@ -83,6 +81,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
       <Commenter
         postId={postId}
         onAddComment={(comment) => {
+          onNewComment(comments.length + 1);
           setComments([comment, ...comments]);
         }}
       />

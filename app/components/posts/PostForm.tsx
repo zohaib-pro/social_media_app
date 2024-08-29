@@ -37,7 +37,7 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
       return;
     }
     postPost({ content, image: postImage });
-  }, [content, postImage]);
+  }, [content, postImage, postPost]);
 
   useEffect(() => {
     if (error) {
@@ -49,12 +49,12 @@ const PostForm: React.FC<PostFormProps> = ({ placeholder }) => {
     if (postResults) {
       const newPost = postResults as Post;
       dispatch(addPost(newPost));
-      console.log(postResults);
+      //console.log(postResults);
       setContent("");
       setPostImage("");
       toast.success("Post Created Successfully");
     }
-  }, [postResults]);
+  }, [postResults, dispatch]);
 
   useEffect(() => {
     //alert(thisUserState?.data?.profileImage);

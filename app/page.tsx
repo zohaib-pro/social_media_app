@@ -19,11 +19,14 @@ import UserView from "./components/UserView";
 import { useSession } from "next-auth/react";
 import SocketTest from "./components/SocketTest";
 
+import Header from "./components/Header";
+
 export default function Home() {
   //const { data: session, status } = useSession();
   return (
     <main className="bg-black">
-      <h1 className="text-sky-400 font-bold text-3xl">Home</h1>
+      <Header label="Home" />
+
       <SocketTest />
       <PostForm placeholder="What's on your mind?" />
       <PostFeed />

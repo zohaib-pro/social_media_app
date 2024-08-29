@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 
@@ -23,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ label, showBackArrow }) => {
             className="cursor-pointer hover:opacity-70 transition"
           />
         )}
-        <h1 className="text-white text-xl font-semibold">{label}</h1>
+        <h1 className="text-sky-400 font-bold text-3xl">{label}</h1>
       </div>
     </div>
   );

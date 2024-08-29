@@ -11,6 +11,8 @@ import CommentsList from "./CommentsList";
 import Avatar from "../Avatar";
 import AutoImage from "../AutoImage";
 import Liker from "./Liker";
+import CommentsCount from "./CommentsCount";
+import { count } from "console";
 
 interface PostItemProps {
   _post: Post;
@@ -23,19 +25,8 @@ interface PostPlus extends Post {
 }
 
 const PostItem: React.FC<PostItemProps> = ({ _post }) => {
-  // Example state to manage likes (you might want to manage likes server-side)
-  const [likes, setLikes] = useState(0);
-
-  const thisUserState = useSelector((state: RootState) => state.thisUser);
-
   const post = _post as PostPlus;
-
-  const [comments, setComments] = useState(post.comments || []);
-  // Function to handle like button click
-  const handleLike = () => {
-    setLikes(likes + 1);
-    // Here you would also want to update the like count server-side
-  };
+  const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
   return (
     <div
@@ -77,8 +68,15 @@ const PostItem: React.FC<PostItemProps> = ({ _post }) => {
         </div>
       </div>
 
-      <Liker postId={post.id} likes={post.likes} />
-      <CommentsList postId={post.id} comments={post.comments} />
+      <div className="flex flex-row gap-5">
+        <Liker postId={post.id} likes={post.likes} />
+        <CommentsCount count={commentsCount} />
+      </div>
+      <CommentsList
+        postId={post.id}
+        comments={post.comments}
+        onNewComment={setCommentsCount}
+      />
     </div>
   );
 };

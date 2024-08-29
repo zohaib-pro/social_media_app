@@ -22,7 +22,7 @@ const PostFeed = () => {
       dispatch(setPosts(posts));
       initialLoad.current = false;
     }
-  }, [posts]);
+  }, [posts, dispatch]);
 
   if (loading) {
     return (
