@@ -5,7 +5,7 @@ import Button from "../Button";
 
 import { useState, useCallback } from "react";
 import { error } from "console";
-import usePost from "@/app/hooks/fetcher";
+import { usePost } from "@/app/hooks/fetcher";
 import { Comment } from "@prisma/client";
 import toast from "react-hot-toast";
 

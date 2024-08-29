@@ -7,6 +7,7 @@ import { setPosts } from "@/app/store/slices/PostsSlice";
 import PostItem from "./PostItem";
 import { useSession } from "next-auth/react";
 import { RootState } from "@/app/store/store";
+import { ClipLoader } from "react-spinners";
 
 const PostFeed = () => {
   const { data: posts, loading, error } = useGet<Post[]>("/api/posts");
@@ -25,8 +26,8 @@ const PostFeed = () => {
 
   if (loading) {
     return (
-      <div className="text-white">
-        <h1>Loading Posts...</h1>
+      <div className="flex flex-col justify-center items-center h-full">
+        <ClipLoader color="lightblue" size={80} />
       </div>
     );
   }
@@ -49,7 +50,7 @@ const PostFeed = () => {
 
   return (
     <div className="flex flex-col overflow-hidden">
-      <div className="flex-1 overflow-y-auto text-white">
+      <div className="flex-1 overflow-y-auto text-white p-1">
         {postsState.data.map((post) => (
           <PostItem key={post.id} _post={post} />
         ))}

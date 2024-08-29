@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const items = [
   {
     label: "Home",
-    href: "/home",
+    href: "/",
     icon: BsHouseFill,
   },
   {

@@ -11,6 +11,12 @@ import { RootState } from "@/app/store/store";
 const UserView = () => {
   //const router = useRouter();
   const thisUserState = useSelector((state: RootState) => state.thisUser);
+  const {
+    data: notificationsData,
+    loading,
+    error,
+  } = useGet<Notification[]>("/api/notifications");
+  console.log(notificationsData);
 
   return !thisUserState.data ? (
     <div className="flex justify-center items-center h-full ">

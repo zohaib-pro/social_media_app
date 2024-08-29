@@ -1,4 +1,4 @@
-import usePost from "@/app/hooks/fetcher";
+import { usePost } from "@/app/hooks/fetcher";
 import { RootState } from "@/app/store/store";
 import { Like } from "@prisma/client";
 import React, { useCallback, useEffect, useRef, useState } from "react";

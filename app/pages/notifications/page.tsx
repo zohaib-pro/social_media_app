@@ -1,9 +1,13 @@
-import { useGet } from "@/app/hooks/fetcher";
+import NotificationList from "@/app/components/layout/notifications/NotificationList";
 import React from "react";
 
 const NotificationsPage = () => {
-  const { data: notificationsData, loading, error } = useGet("/notifications");
-  return <div className="text-white">NotificationsPage</div>;
+  return (
+    <div className="text-white">
+      <h1 className="text-sky-400 font-bold text-3xl">Notifications</h1>
+      <NotificationList />
+    </div>
+  );
 };
 
 export default NotificationsPage;

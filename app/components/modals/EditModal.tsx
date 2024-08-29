@@ -9,7 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ImageUpload from "../form/ImageUpload";
 
-import usePost from "@/app/hooks/fetcher";
+import { usePost } from "@/app/hooks/fetcher";
 import { User } from "@prisma/client";
 import { updateData } from "@/app/store/slices/UsersSlice";
 import { setThisUser } from "@/app/store/slices/ThisUserSlice";
@@ -21,29 +21,27 @@ const EditModal = () => {
     error,
     loading,
   } = usePost<User>("/api/users/edit");
-  
+
   const editModalState = useSelector((state: RootState) => state.editModal);
   const thisUserState = useSelector((state: RootState) => state.thisUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [name, setName] = useState("");
-  const [profileImage, setProfileimage] = useState<string|null>("");
+  const [profileImage, setProfileimage] = useState<string | null>("");
   const [coverImage, setCoverImage] = useState<string | null>();
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     const user = thisUserState.data as User;
-    if (user){
+    if (user) {
       setEmail(user.email);
-    setProfileimage(user.profileImage);
-    setCoverImage(user.coverImage);
-    setName(user.name);
+      setProfileimage(user.profileImage);
+      setCoverImage(user.coverImage);
+      setName(user.name);
     }
   }, [thisUserState.data]);
-
-
 
   const onSubmit = useCallback(async () => {
     postEditData({ email, name, profileImage, coverImage });
@@ -78,7 +76,11 @@ const EditModal = () => {
         disabled={isLoading}
       />
 
-      <ImageUpload value={profileImage || ""} onChange={setProfileimage} label="Profile Image" />
+      <ImageUpload
+        value={profileImage || ""}
+        onChange={setProfileimage}
+        label="Profile Image"
+      />
       <ImageUpload onChange={setCoverImage} label="Cover Image" />
 
       {/* <Input

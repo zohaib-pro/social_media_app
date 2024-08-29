@@ -92,6 +92,6 @@ const usePost = <T>(url: string): UsePostResponse<T> => {
   return { data, loading, error, post };
 };
 
-export default usePost;
+// export default usePost;
 
 export { useGet, usePost };
