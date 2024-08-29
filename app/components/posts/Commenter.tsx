@@ -36,7 +36,7 @@ const Commenter: React.FC<CommenterProps> = ({ onAddComment, postId }) => {
     if (commentingError) {
       toast.error("Failed to add comment!");
     }
-  }, [commentResults, commentingError, onAddComment]);
+  }, [commentResults, commentingError]);
 
   return (
     <div className="flex gap-1">
