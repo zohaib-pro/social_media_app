@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Avatar from "../Avatar";
+import Avatar from "../users/Avatar";
 import Button from "../Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../store/slices/PostsSlice";

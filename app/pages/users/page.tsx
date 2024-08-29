@@ -1,5 +1,5 @@
 import Header from "@/app/components/Header";
-import UserView from "@/app/components/UserView";
+import UserView from "@/app/components/users/UserView";
 import React from "react";
 
 const page = () => {

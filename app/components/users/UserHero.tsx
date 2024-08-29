@@ -2,7 +2,7 @@
 import { User } from "@prisma/client";
 import React, { useCallback } from "react";
 
-import Button from "./Button";
+import Button from "../Button";
 import Avatar from "./Avatar";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";

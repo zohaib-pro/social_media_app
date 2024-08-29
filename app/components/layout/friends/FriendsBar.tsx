@@ -1,7 +1,7 @@
 "use client";
 import { User } from "@prisma/client";
 import React from "react";
-import Avatar from "../../Avatar";
+import Avatar from "../../users/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
@@ -37,7 +37,7 @@ function FriendsBar() {
     } else {
       console.log("not setting this user", null);
     }
-  }, [users, session?.data?.user]);
+  }, [users, session?.data?.user, dispatch]);
   return (
     <div className="px-6 py-4 lg-block">
       <div className="fixed">

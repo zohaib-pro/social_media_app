@@ -54,7 +54,7 @@ const Liker: React.FC<LikerProps> = ({ likes: _likes, postId }) => {
     ) {
       setLiked(true);
     }
-  }, [thisUser.data]);
+  }, [thisUser.data, likes, postId]);
   return (
     <div className="text-sky-500">
       <button

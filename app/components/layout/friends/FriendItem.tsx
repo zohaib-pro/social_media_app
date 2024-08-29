@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Avatar from "../../Avatar";
+import Avatar from "../../users/Avatar";
 import { User } from "@prisma/client";
 import { FaPlusCircle, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";

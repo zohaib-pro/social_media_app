@@ -10,12 +10,12 @@ import EditModal from "./components/modals/EditModal";
 import Navbar from "./components/Navbar";
 import MyComponent from "./components/MyComponent";
 import { Toaster } from "react-hot-toast";
-import Avatar from "./components/Avatar";
+import Avatar from "./components/users/Avatar";
 import Button from "./components/Button";
 import TesterComponent from "./components/TesterComponent";
 import PostForm from "./components/posts/PostForm";
 import PostFeed from "./components/posts/PostFeed";
-import UserView from "./components/UserView";
+import UserView from "./components/users/UserView";
 import { useSession } from "next-auth/react";
 import SocketTest from "./components/SocketTest";
 

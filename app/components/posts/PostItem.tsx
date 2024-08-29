@@ -8,11 +8,10 @@ import Commenter from "./Commenter";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import CommentsList from "./CommentsList";
-import Avatar from "../Avatar";
+import Avatar from "../users/Avatar";
 import AutoImage from "../AutoImage";
 import Liker from "./Liker";
 import CommentsCount from "./CommentsCount";
-import { count } from "console";
 
 interface PostItemProps {
   _post: Post;

@@ -1,9 +1,6 @@
 "use client";
-import { User } from "@prisma/client";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
-import { useGet } from "../hooks/fetcher";
+import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import UserHero from "./UserHero";
 import { useSelector } from "react-redux";

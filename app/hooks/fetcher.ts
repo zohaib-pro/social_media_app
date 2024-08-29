@@ -42,7 +42,7 @@ const useGet = <T>(
     };
 
     fetchData();
-  }, []);
+  });
 
   return { data, loading, error };
 };
