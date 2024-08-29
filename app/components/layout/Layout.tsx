@@ -1,5 +1,5 @@
-import FriendsBar from "./layout/FriendsBar";
-import Sidebar from "./layout/Sidebar";
+import FriendsBar from "./friends/FriendsBar";
+import Sidebar from "./Sidebar/Sidebar";
 
 interface LayoutProps {
   children: React.ReactNode;

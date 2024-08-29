@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import AuthProvider from "./utils/SessionProvider";
-import Layout from "./components/Layout";
+import Layout from "./components/layout/Layout";
 import ClientProviderWrapper from "./components/ClientProviderWrapper";
 import { Toaster } from "react-hot-toast";
 import LoginModal from "./components/modals/LoginModal";

@@ -1,7 +1,7 @@
 "use client";
 import { User } from "@prisma/client";
 import React from "react";
-import Avatar from "../Avatar";
+import Avatar from "../../Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 

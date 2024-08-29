@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Layout from "./components/Layout";
+import Layout from "./components/layout/Layout";
 import Modal from "./components/Modal";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -23,16 +23,10 @@ export default function Home() {
   //const { data: session, status } = useSession();
   return (
     <main className="bg-black">
-      {/* <Navbar /> */}
-      {/* <MyComponent /> */}
       <h1 className="text-sky-400 font-bold text-3xl">Home</h1>
-      {/* <Avatar user={session?.user} userId={""} isLarge hasBorder /> */}
-      <UserView />
       <SocketTest />
       <PostForm placeholder="What's on your mind?" />
-
       <PostFeed />
-      {/* <TesterComponent /> */}
     </main>
   );
 }
