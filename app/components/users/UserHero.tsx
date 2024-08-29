@@ -8,9 +8,13 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { onOpen } from "@/app/store/slices/EditModalSlice";
+import IconText from "../IconText";
+
+import { LuCalendarDays } from "react-icons/lu";
+import { FaRegIdCard } from "react-icons/fa";
 
 interface UserHeroProps {
-  user?: User;
+  user: User;
 }
 
 const UserHero: React.FC<UserHeroProps> = ({ user }) => {
@@ -38,6 +42,22 @@ const UserHero: React.FC<UserHeroProps> = ({ user }) => {
       {/* <h1 className="text-white">ttskfsklfj</h1> */}
       <div className="flex flex-row justify-end bottom mt-2 me-1">
         <Button label="edit" onClick={handleEdit} />
+      </div>
+      <div className="text-white p-2">
+        <h1 className="text-2xl">{user?.name}</h1>
+        <p className="text-neutral-400">{user?.email}</p>
+        <div className="mt-5">
+          <IconText
+            icon={LuCalendarDays}
+            text={
+              "Member since: " + new Date(user.createdAt).toLocaleDateString()
+            }
+          />
+          <IconText
+            icon={FaRegIdCard}
+            text={`Username: ${user.email.split("@")[0]}${user.id}`}
+          />
+        </div>
       </div>
     </div>
   );
